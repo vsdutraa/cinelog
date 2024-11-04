@@ -2,19 +2,16 @@ import { UserButton } from "@clerk/nextjs";
 
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-
 import Link from "next/link";
+
+import { Button } from "./ui/button";
 
 const Navbar = async () => {
   const { userId } = await auth();
 
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
   return (
     <div className="border-b">
-      <nav className="container h-16 mx-auto flex items-center justify-between">
+      <nav className="container px-4 md:px-6 h-16 mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-6">
           {/* logo */}
           <Link
@@ -37,7 +34,13 @@ const Navbar = async () => {
 
         {/* user actions */}
         <div className="flex items-center">
-          <UserButton />
+          {userId ? (
+            <UserButton />
+          ) : (
+            <Button asChild>
+              <Link href="sign-in">Login</Link>
+            </Button>
+          )}
         </div>
       </nav>
     </div>
