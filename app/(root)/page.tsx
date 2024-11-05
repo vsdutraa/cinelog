@@ -8,7 +8,7 @@ import Link from "next/link";
 import MovieCarousel from "@/components/movie-carousel";
 import FeaturesGrid from "@/components/features";
 
-const Dashboard = () => {
+const Dashboard = async () => {
   const [movies, setMovies] = useState<any[]>([]);
 
   useEffect(() => {

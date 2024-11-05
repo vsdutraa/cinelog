@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 import { Button } from "./ui/button";
+import SearchBar from "./search-bar";
 
 const Navbar = async () => {
   const { userId } = await auth();
@@ -31,6 +32,8 @@ const Navbar = async () => {
             </Link>
           </div>
         </div>
+
+        <SearchBar />
 
         {/* user actions */}
         <div className="flex items-center">

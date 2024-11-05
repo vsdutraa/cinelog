@@ -49,3 +49,13 @@ export const fetchMovieCredits = async (movieId: string) => {
     console.error("Error fetching credits:", error);
   }
 };
+
+export const searchMovies = async (query: string) => {
+  if (!query) return null;
+
+  return await fetchMovies("search/movie", {
+    query,
+    language: "en-US",
+    include_adult: false,
+  });
+};
