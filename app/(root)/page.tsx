@@ -4,7 +4,9 @@ import { Eye, Bookmark, Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchMovies } from "../../lib/tmdb";
 import Link from "next/link";
+
 import MovieCarousel from "@/components/movie-carousel";
+import FeaturesGrid from "@/components/features";
 
 const Dashboard = () => {
   const [movies, setMovies] = useState<any[]>([]);
@@ -44,29 +46,7 @@ const Dashboard = () => {
         {movies.length > 0 && <MovieCarousel movies={movies} />}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 mt-6 text-black ">
-        <div className="flex flex-col items-center text-center py-4 md:p-6 lg:p-8">
-          <Eye className="text-black w-10 h-10 mb-4 " />
-          {/* Ícone com tamanho ajustado */}
-          <p className="font-bold text-xl md:text-2xl lg:text-3xl">
-            Track films you’ve watched.
-          </p>
-        </div>
-
-        <div className="flex flex-col items-center text-center py-4 md:p-6 lg:p-8">
-          <Bookmark className="text-black w-10 h-10 mb-4" />
-          <p className="font-bold text-xl md:text-2xl lg:text-3xl">
-            Save those you want to see.
-          </p>
-        </div>
-
-        <div className="flex flex-col items-center text-center py-4 md:p-6 lg:p-8">
-          <Share2 className="text-black w-10 h-10  mb-4" />
-          <p className="font-bold text-xl md:text-2xl lg:text-3xl">
-            Tell your friends what’s good.
-          </p>
-        </div>
-      </div>
+      <FeaturesGrid />
     </div>
   );
 };

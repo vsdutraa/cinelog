@@ -1,20 +1,27 @@
 const BASE_URL = "https://api.themoviedb.org/3";
 
-export const fetchMovies = async (endpoint: string) => {
+export const fetchMovies = async (
+  endpoint: string,
+  params: Record<string, any> = {}
+) => {
   try {
-    const response = await fetch(
-      `${BASE_URL}/${endpoint}?language=en-US&page=1`,
-      {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_BEARER_TOKEN}`,
-        },
-      }
-    );
+    const queryParams = new URLSearchParams({
+      language: "en-US",
+      ...params,
+    });
+
+    const response = await fetch(`${BASE_URL}/${endpoint}?${queryParams}`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_BEARER_TOKEN}`,
+      },
+    });
+
     if (!response.ok) {
       throw new Error(`Failed to fetch data: ${response.status}`);
     }
+
     return await response.json();
   } catch (error) {
     console.error("Error fetching movies:", error);
