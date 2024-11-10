@@ -28,24 +28,3 @@ export const fetchMovies = async (
     return null;
   }
 };
-
-export const fetchMovieCredits = async (movieId: string) => {
-  try {
-    const response = await fetch(`${BASE_URL}/movie/${movieId}/credits`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_BEARER_TOKEN}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch credits: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching credits:", error);
-  }
-};
