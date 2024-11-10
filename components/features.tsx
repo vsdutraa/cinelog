@@ -15,7 +15,7 @@ const features = [
   },
 ];
 
-export default function FeaturesGrid() {
+const FeaturesGrid = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 mt-6 text-black">
       {features.map((feature, index) => {
@@ -34,4 +34,4 @@ export default function FeaturesGrid() {
       })}
     </div>
   );
-}
+};
