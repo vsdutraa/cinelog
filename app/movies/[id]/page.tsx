@@ -1,13 +1,12 @@
 import { fetchMovies } from "@/lib/tmdb";
 
 interface MovieDetailsPageProps {
-  params: { id: string };
+  params: Awaited<{ id: string }>;
 }
 
 const MovieDetails: React.FC<MovieDetailsPageProps> = async ({ params }) => {
   const movieId = params.id;
   const movie = await fetchMovies(`movie/${movieId}`);
-  console.log("Fetching details for movie ID:", movieId);
 
   if (!movie) {
     return <p>Movie not found</p>;
