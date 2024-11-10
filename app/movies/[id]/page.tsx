@@ -1,10 +1,10 @@
 import { fetchMovies } from "@/lib/tmdb";
 
-export default async function MovieDetails({
-  params,
-}: {
+interface MovieDetailsPageProps {
   params: { id: string };
-}) {
+}
+
+const MovieDetails: React.FC<MovieDetailsPageProps> = async ({ params }) => {
   const movieId = params.id;
 
   const movie = await fetchMovies(`movie/${movieId}`);
@@ -41,4 +41,5 @@ export default async function MovieDetails({
       </div>
     </div>
   );
-}
+};
+export default MovieDetails;
