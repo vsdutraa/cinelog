@@ -6,8 +6,8 @@ export const fetchMovies = async (
 ) => {
   try {
     const queryParams = new URLSearchParams({
-      language: "en-US",
       ...params,
+      language: "en-US",
     });
 
     const response = await fetch(`${BASE_URL}/${endpoint}?${queryParams}`, {

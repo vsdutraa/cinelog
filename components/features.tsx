@@ -35,3 +35,5 @@ const FeaturesGrid = () => {
     </div>
   );
 };
+
+export default FeaturesGrid;

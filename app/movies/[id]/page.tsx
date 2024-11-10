@@ -1,17 +1,18 @@
 import { fetchMovies } from "@/lib/tmdb";
 
 interface MovieDetailsPageProps {
-  params: { movieId: string };
+  params: { id: string };
 }
 
 const MovieDetails: React.FC<MovieDetailsPageProps> = async ({ params }) => {
-  const movie = await fetchMovies(`movie/${params.movieId}`);
+  const movieId = params.id;
+  const movie = await fetchMovies(`movie/${movieId}`);
+  console.log("Fetching details for movie ID:", movieId);
 
   if (!movie) {
     return <p>Movie not found</p>;
   }
 
-  console.log(movie.vote_average);
   return (
     <div className="container mx-auto p-4">
       <div className="mb-4">
