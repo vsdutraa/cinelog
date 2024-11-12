@@ -13,7 +13,7 @@ export default function SearchBar() {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim()) {
-      redirect(`/movies/search?query=${encodeURIComponent(query.trim())}`);
+      redirect(`/movies/search/${encodeURIComponent(query.trim())}`);
     }
   };
 

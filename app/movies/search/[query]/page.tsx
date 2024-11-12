@@ -1,7 +1,5 @@
-"use client";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import { Movie } from "@/lib/types";
@@ -9,34 +7,19 @@ import { searchMovies } from "@/lib/tmdb";
 
 import { Separator } from "@/components/ui/separator";
 
-export default function SearchResults() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query") || "";
-  const [results, setResults] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(false);
+const SearchResults = async ({ params }: any) => {
+  const { query } = await params;
+  console.log(query);
 
-  useEffect(() => {
-    const fetchResults = async () => {
-      setLoading(true);
-      const movies = await searchMovies(query);
-      setResults(movies);
-      setLoading(false);
-    };
-
-    if (query) {
-      fetchResults();
-    }
-  }, [query]);
+  const movies = await searchMovies(query);
 
   return (
     <div className="p-6">
       <h1 className="text-xl font-semibold mb-4">Results for "{query}"</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : results.length > 0 ? (
+      {movies.length > 0 ? (
         <ul className="space-y-4">
-          {results.map(
-            (movie) =>
+          {movies.map(
+            (movie: Movie) =>
               movie.poster_path &&
               movie.overview && (
                 <li key={movie.id}>
@@ -60,7 +43,7 @@ export default function SearchResults() {
                       </div>
                     </div>
                   </Link>
-                  {results.length > 1 && <Separator />}
+                  {movies.length > 1 && <Separator />}
                 </li>
               )
           )}
@@ -70,4 +53,6 @@ export default function SearchResults() {
       )}
     </div>
   );
-}
+};
+
+export default SearchResults;

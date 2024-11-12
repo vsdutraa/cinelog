@@ -1,7 +1,7 @@
 import { fetchMovies } from "@/lib/tmdb";
 
 const MovieDetails = async ({ params }: any) => {
-  const id = params.id;
+  const { id } = await params;
   const movie = await fetchMovies(`movie/${id}`);
 
   if (!movie) {
