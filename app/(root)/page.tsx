@@ -1,9 +1,7 @@
 "use client";
 
-import { Eye, Bookmark, Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchMovies } from "../../lib/tmdb";
-import Link from "next/link";
 
 import MovieCarousel from "@/components/movie-carousel";
 import FeaturesGrid from "@/components/features";
@@ -20,8 +18,6 @@ const Dashboard = () => {
     };
     getPopularMovies();
   }, []);
-
-  console.log(movies);
 
   return (
     <div className="mt-4">

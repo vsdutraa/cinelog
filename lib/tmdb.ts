@@ -28,3 +28,30 @@ export const fetchMovies = async (
     return null;
   }
 };
+
+export const searchMovies = async (query: string) => {
+  if (!query) return [];
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/search/movie?query=${encodeURIComponent(query)}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_BEARER_TOKEN}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.results;
+  } catch (error) {
+    console.log("Error searching movies:", error);
+    return [];
+  }
+};

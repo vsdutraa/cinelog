@@ -27,8 +27,8 @@ const MovieDetails = async ({ params }: any) => {
 
         <div className="flex-1">
           <p className="text-lg mb-4">
-            <span className="font-semibold">Rating:</span> {movie.vote_average}{" "}
-            / 10
+            <span className="font-semibold">Rating:</span>{" "}
+            {movie.vote_average.toFixed(1)} / 10
           </p>
           <p className="text-lg mb-4">{movie.overview}</p>
         </div>

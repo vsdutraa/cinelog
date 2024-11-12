@@ -5,7 +5,7 @@ import { Outfit } from "next/font/google";
 
 import { ClerkProvider } from "@clerk/nextjs";
 
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbar/navbar";
 
 const font = Outfit({ subsets: ["latin"] });
 
