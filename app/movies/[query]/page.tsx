@@ -9,13 +9,15 @@ import { Separator } from "@/components/ui/separator";
 
 const SearchResults = async ({ params }: any) => {
   const { query } = await params;
-  console.log(query);
+  const decodedQuery = query ? decodeURIComponent(query as string) : "";
 
   const movies = await searchMovies(query);
 
   return (
     <div className="p-6">
-      <h1 className="text-xl font-semibold mb-4">Results for "{query}"</h1>
+      <h1 className="text-xl font-semibold mb-4">
+        Results for "{decodedQuery}"
+      </h1>
       {movies.length > 0 ? (
         <ul className="space-y-4">
           {movies.map(
@@ -36,7 +38,7 @@ const SearchResults = async ({ params }: any) => {
                       <div>
                         <h2 className="text-lg font-medium">
                           {movie.title}
-                          <span className="text-sm text-gray-500 ml-2">
+                          <span className="text-sm text-neutral-500 ml-2">
                             {movie.release_date.slice(0, 4)}
                           </span>
                         </h2>

@@ -24,7 +24,7 @@ const MovieCarousel: React.FC<CarouselProps> = ({ movies }) => {
     >
       {movies.map((movie) => (
         <SwiperSlide key={movie.id}>
-          <Link href={`/movies/${movie.id}`}>
+          <Link href={`/movie/${movie.id}`}>
             <div className="rounded-sm shadow-md">
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

@@ -45,7 +45,7 @@ const Movies = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
           {movies &&
             movies.map((movie, i) => (
-              <Link href={`/movies/${movie.id}`} key={`${movie.id}`}>
+              <Link href={`/movie/${movie.id}`} key={`${movie.id}`}>
                 <div className="rounded-sm shadow-sm overflow-hidden aspect-[2/3]">
                   <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
