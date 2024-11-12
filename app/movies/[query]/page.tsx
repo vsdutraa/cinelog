@@ -25,7 +25,7 @@ const SearchResults = async ({ params }: any) => {
               movie.poster_path &&
               movie.overview && (
                 <li key={movie.id}>
-                  <Link href={`/movies/${movie.id}`} key={`${movie.id}`}>
+                  <Link href={`/movie/${movie.id}`} key={`${movie.id}`}>
                     <div className="flex items-center space-x-4">
                       {/* poster */}
                       <img
