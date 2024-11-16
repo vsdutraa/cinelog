@@ -23,7 +23,7 @@ const MovieCarousel = ({ movies }: { movies: Movie[] }) => {
         >
           {movies.map((movie) => (
             <SwiperSlide key={movie.id}>
-              <Link href={`/movie/${movie.id}`}>
+              <Link href={`/movies/${movie.id}`}>
                 <div className="rounded-sm shadow-md">
                   <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

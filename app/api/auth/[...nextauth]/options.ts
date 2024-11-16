@@ -3,7 +3,6 @@ import User from "@/models/user";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { NextRequest, NextResponse } from "next/server";
 
 export const options: NextAuthOptions = {
   providers: [
@@ -41,5 +40,6 @@ export const options: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
+    newUser: "/",
   },
 };

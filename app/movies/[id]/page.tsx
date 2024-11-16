@@ -1,4 +1,5 @@
-import { fetchMovies } from "@/lib/tmdb";
+import { fetchMovieById, fetchMovieDirector } from "@/lib/tmdb";
+import MoviePoster from "@/components/movies/movie-poster";
 
 const MovieDetails = async ({
   params,
@@ -6,7 +7,8 @@ const MovieDetails = async ({
   params: Promise<{ id: string }>;
 }) => {
   const id = (await params).id;
-  const movie = await fetchMovies(`movie/${id}`);
+  const movie = await fetchMovieById(id);
+  const director = await fetchMovieDirector(id);
 
   if (!movie) {
     return <p>Movie not found</p>;
@@ -14,9 +16,23 @@ const MovieDetails = async ({
 
   return (
     <div className="container mx-auto p-4">
-      <div className="mb-4">
-        <h1 className="text-3xl font-bold">{movie.title}</h1>
-        <h2 className="text-lg">{movie.release_date?.slice(0, 4)}</h2>
+      <div className="relative">
+        <MoviePoster movie={movie} />
+      </div>
+
+      <div className="md:flex items-end md:space-x-3 mb-4">
+        <h1 className="text-2xl md:text-3xl font-serif font-black text-shadow">
+          {movie.title}
+        </h1>
+        <div className="flex items-end space-x-2">
+          <p className="text-lg md:text-xl">
+            {movie.release_date?.slice(0, 4)}
+          </p>
+          <p className="text-lg md:text-xl capitalize">
+            <span className="text-neutral-600 font-light">Directed by</span>{" "}
+            {director}
+          </p>
+        </div>
       </div>
 
       <div className="flex flex-col md:flex-row items-center md:items-start gap-4">

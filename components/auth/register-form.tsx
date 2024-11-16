@@ -55,7 +55,7 @@ const RegisterForm = () => {
       } else {
         toast.success(message);
         form.reset();
-        router.push("/");
+        router.replace("/");
       }
     } catch (error) {
       toast.error("An unexpected error occurred.");

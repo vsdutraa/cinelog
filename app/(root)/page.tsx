@@ -1,22 +1,14 @@
-import { fetchMovies } from "@/lib/tmdb";
-import MovieCarousel from "@/components/dashboard/movie-carousel";
+import { fetchPopularMovies } from "@/lib/tmdb";
+import MovieCarousel from "@/components/movies/movie-carousel";
+import MoviePoster from "@/components/movies/movie-poster";
 
 const Dashboard = async () => {
-  const data = await fetchMovies("movie/popular");
-  const movies = data.results;
+  const data = await fetchPopularMovies(1);
+  const movies = data?.results || [];
 
   return (
     <div className="mt-4">
-      {movies && (
-        <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-md">
-          <img
-            src={`https://image.tmdb.org/t/p/original/${movies[0].backdrop_path}`}
-            alt={movies[0].title}
-            className="w-full h-full object-cover"
-            draggable="false"
-          />
-        </div>
-      )}
+      {movies && <MoviePoster movie={movies[0]} />}
 
       <h1 className="relative mt-6 text-black text-2xl sm:text-3xl md:text-4xl font-bold text-center leading-snug px-4">
         Discover movies you love. Mark the ones to watch. Let friends in on your
