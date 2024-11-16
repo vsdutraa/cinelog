@@ -1,7 +1,11 @@
 import { fetchMovies } from "@/lib/tmdb";
 
-const MovieDetails = async ({ params }: any) => {
-  const { id } = await params;
+const MovieDetails = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const id = (await params).id;
   const movie = await fetchMovies(`movie/${id}`);
 
   if (!movie) {
@@ -12,7 +16,7 @@ const MovieDetails = async ({ params }: any) => {
     <div className="container mx-auto p-4">
       <div className="mb-4">
         <h1 className="text-3xl font-bold">{movie.title}</h1>
-        <h2 className="text-lg">{movie.release_date.slice(0, 4)}</h2>
+        <h2 className="text-lg">{movie.release_date?.slice(0, 4)}</h2>
       </div>
 
       <div className="flex flex-col md:flex-row items-center md:items-start gap-4">

@@ -1,17 +1,21 @@
-// import { useEffect, useState } from "react";
-
+// next imports
 import Link from "next/link";
 
 import { Movie } from "@/lib/types";
 import { searchMovies } from "@/lib/tmdb";
-
+// components
 import { Separator } from "@/components/ui/separator";
 
-const SearchResults = async ({ params }: any) => {
-  const { query } = await params;
-  const decodedQuery = query ? decodeURIComponent(query as string) : "";
+const SearchResults = async ({
+  params,
+}: {
+  params: Promise<{ query: string }>;
+}) => {
+  const query = (await params).query;
+  const decodedQuery = decodeURIComponent(query);
 
-  const movies = await searchMovies(query);
+  const data = await searchMovies(query);
+  const movies = data.results;
 
   return (
     <div className="p-6">
@@ -39,7 +43,7 @@ const SearchResults = async ({ params }: any) => {
                         <h2 className="text-lg font-medium">
                           {movie.title}
                           <span className="text-sm text-neutral-500 ml-2">
-                            {movie.release_date.slice(0, 4)}
+                            {movie.release_date?.slice(0, 4)}
                           </span>
                         </h2>
                       </div>

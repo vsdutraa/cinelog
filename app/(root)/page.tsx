@@ -1,31 +1,16 @@
-"use client";
+import { fetchMovies } from "@/lib/tmdb";
+import MovieCarousel from "@/components/dashboard/movie-carousel";
 
-import { useEffect, useState } from "react";
-import { fetchMovies } from "../../lib/tmdb";
-
-import MovieCarousel from "@/components/movie-carousel";
-import FeaturesGrid from "@/components/features";
-
-const Dashboard = () => {
-  const [movies, setMovies] = useState<any[]>([]);
-
-  useEffect(() => {
-    const getPopularMovies = async () => {
-      const data = await fetchMovies("movie/popular");
-      if (data && data.results) {
-        setMovies(data.results);
-      }
-    };
-    getPopularMovies();
-  }, []);
+const Dashboard = async () => {
+  const data = await fetchMovies("movie/popular");
+  const movies = data.results;
 
   return (
     <div className="mt-4">
-      {movies.length > 0 && (
+      {movies && (
         <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-md">
-          {/* Imagem de fundo */}
           <img
-            src={`https://image.tmdb.org/t/p/original/${movies[2].backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/original/${movies[0].backdrop_path}`}
             alt={movies[0].title}
             className="w-full h-full object-cover"
             draggable="false"
@@ -38,11 +23,9 @@ const Dashboard = () => {
         top picks.
       </h1>
 
-      <div className="mt-6">
-        {movies.length > 0 && <MovieCarousel movies={movies} />}
-      </div>
+      <div className="mt-6">{movies && <MovieCarousel movies={movies} />}</div>
 
-      <FeaturesGrid />
+      <div className="pb-6"></div>
     </div>
   );
 };

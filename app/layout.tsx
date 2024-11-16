@@ -1,11 +1,13 @@
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import type { Metadata } from "next";
 
 import { Outfit } from "next/font/google";
 
-import { ClerkProvider } from "@clerk/nextjs";
-
 import Navbar from "@/components/navbar/navbar";
+
+import SessionWrapper from "@/components/auth/session-wrapper";
+import { ToastContainer } from "react-toastify";
 
 const font = Outfit({ subsets: ["latin"] });
 
@@ -20,13 +22,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <SessionWrapper>
       <html lang="en">
         <body className={font.className}>
           <Navbar />
-          <main className="container mx-auto px-4 md:px-6">{children}</main>
+          <main className="container mx-auto px-4 md:px-6">
+            {children}
+            <ToastContainer position="bottom-center" />
+          </main>
         </body>
       </html>
-    </ClerkProvider>
+    </SessionWrapper>
   );
 }
