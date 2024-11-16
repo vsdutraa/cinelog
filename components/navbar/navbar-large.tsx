@@ -1,10 +1,10 @@
+"use client";
 import Link from "next/link";
 
-import SearchBar from "@/components/search-bar";
+import SearchBar from "@/components/navbar/search-bar";
+import UserActions from "@/components/auth/user-actions";
 
-import UserActions from "@/components/user-actions";
-
-const NavbarLarge = async () => {
+const NavbarLarge = () => {
   const navLinks = [{ href: "/movies", label: "Movies" }];
 
   return (
@@ -34,9 +34,9 @@ const NavbarLarge = async () => {
       </div>
 
       {/* right side */}
+
       <div className="flex space-x-2">
         <SearchBar />
-
         <UserActions />
       </div>
     </nav>

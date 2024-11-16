@@ -10,7 +10,7 @@ export const fetchMovies = async (
       language: "en-US",
     });
 
-    const response = await fetch(`${BASE_URL}/${endpoint}?${queryParams}`, {
+    const res = await fetch(`${BASE_URL}/${endpoint}?${queryParams}`, {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -18,11 +18,11 @@ export const fetchMovies = async (
       },
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data: ${response.status}`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data: ${res.status}`);
     }
 
-    return await response.json();
+    return await res.json();
   } catch (error) {
     console.error("Error fetching movies:", error);
     return null;
@@ -33,7 +33,7 @@ export const searchMovies = async (query: string) => {
   if (!query) return [];
 
   try {
-    const response = await fetch(
+    const res = await fetch(
       `${BASE_URL}/search/movie?query=${encodeURIComponent(query)}`,
       {
         method: "GET",
@@ -44,12 +44,11 @@ export const searchMovies = async (query: string) => {
       }
     );
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data: ${response.status}`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data: ${res.status}`);
     }
 
-    const data = await response.json();
-    return data.results;
+    return await res.json();
   } catch (error) {
     console.log("Error searching movies:", error);
     return [];

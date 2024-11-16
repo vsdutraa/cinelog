@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import NavbarSheet from "@/components/navbar/navbar-sheet";
-import SearchBar from "@/components/search-bar";
+import SearchBar from "@/components/navbar/search-bar";
 
 const NavbarMobile = async () => {
   return (

@@ -6,12 +6,11 @@ import {
   Sheet,
   SheetTrigger,
   SheetContent,
-  SheetClose,
   SheetTitle,
   SheetHeader,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import UserActions from "@/components/user-actions";
+import UserActions from "@/components/auth/user-actions";
 
 const NavbarSheet = async () => {
   return (
@@ -37,7 +36,6 @@ const NavbarSheet = async () => {
               Movies
             </Link>
           </div>
-
           <UserActions variant="col" />
         </div>
       </SheetContent>

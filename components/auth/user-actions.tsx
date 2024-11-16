@@ -1,33 +1,30 @@
+"use client";
+
 import Link from "next/link";
-
-import { auth } from "@clerk/nextjs/server";
-import { UserButton } from "@clerk/nextjs";
-
+import { useSession } from "next-auth/react";
+import LogoutButton from "@/components/auth/logout-button";
 import { Button } from "@/components/ui/button";
 
 interface UserActionsProps {
   variant?: "col" | "row";
 }
 
-const UserActions = async ({ variant = "row" }: UserActionsProps) => {
-  const { userId } = await auth();
+const UserActions = ({ variant = "row" }: UserActionsProps) => {
+  const { data: session } = useSession();
 
   const layoutClasses =
     variant === "col" ? "flex flex-col space-y-2" : "flex flex-row space-x-2";
-
   return (
     <div>
-      {userId ? (
-        <div className="flex items-center">
-          <UserButton />
-        </div>
+      {session ? (
+        <LogoutButton />
       ) : (
         <div className={layoutClasses}>
           <Button variant="outline" asChild>
-            <Link href="/sign-in">Sign In</Link>
+            <Link href="/login">Sign In</Link>
           </Button>
           <Button asChild>
-            <Link href="/sign-up">Sign Up</Link>
+            <Link href="/register">Sign Up</Link>
           </Button>
         </div>
       )}
