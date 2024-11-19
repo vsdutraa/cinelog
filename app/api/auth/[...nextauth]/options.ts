@@ -13,33 +13,43 @@ export const options: NextAuthOptions = {
 
         const { email, password } = credentials;
 
-        try {
-          await connectMongoDB();
-          const user = await User.findOne({ email });
-          if (!user) {
-            throw new Error("User not found.");
-          } else {
-            const passwordsMatch = await bcrypt.compare(
-              password,
-              user.password
-            );
-            if (!passwordsMatch) {
-              throw new Error("Passwords do not match.");
-            }
-            return user;
-          }
-        } catch (error) {
-          console.error("Error during authentication:", error);
+        await connectMongoDB();
+        const user = await User.findOne({ email });
+        if (!user) {
+          throw new Error("User not found.");
         }
+
+        const passwordsMatch = await bcrypt.compare(password, user.password);
+        if (!passwordsMatch) {
+          throw new Error("Passwords do not match.");
+        }
+
+        return {
+          id: user._id,
+        };
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
     newUser: "/",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user = {
+        id: token.id,
+      };
+      return session;
+    },
   },
 };

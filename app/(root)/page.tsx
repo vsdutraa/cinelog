@@ -1,9 +1,10 @@
 import { fetchPopularMovies } from "@/app/api/integrations/tmdb/tmdb";
-import MovieCarousel from "@/components/movies/movie-carousel";
-import MoviePoster from "@/components/movies/movie-poster";
+import MovieCarousel from "@/components/movies/list/movie-carousel";
+import MoviePoster from "@/components/movies/details/movie-poster";
 
 const Dashboard = async () => {
-  const data = await fetchPopularMovies(1);
+  const res = await fetchPopularMovies(1);
+  const data = await res.json();
   const movies = data?.results || [];
 
   return (
@@ -16,8 +17,6 @@ const Dashboard = async () => {
       </h1>
 
       <div className="mt-6">{movies && <MovieCarousel movies={movies} />}</div>
-
-      <div className="pb-6"></div>
     </div>
   );
 };

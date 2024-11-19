@@ -1,4 +1,4 @@
-import MoviesList from "@/components/movies/movies-list";
+import MoviesList from "@/components/movies/list/movies-list";
 
 export default function MoviesPage() {
   return (

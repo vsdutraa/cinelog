@@ -13,8 +13,12 @@ const MoviesList = () => {
 
   const fetchMovies = async (page: number) => {
     try {
-      const data = await fetchPopularMovies(page);
-      return data?.results || [];
+      const res = await fetchPopularMovies(page);
+      const data = await res.json();
+      const movies = data?.results || [];
+      console.log(movies);
+
+      return movies;
     } catch (error) {
       console.error("Error fetching movies:", error);
       return [];

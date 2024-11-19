@@ -1,10 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 const UserAvatar = ({ username }: { username: string }) => {
   return (
     <div>
       <img
-        src="https://github.com/shadcn.png"
+        src="https://cdn-icons-png.freepik.com/512/8742/8742495.png"
         alt="Avatar"
         className="h-28 w-28 rounded-full"
       />

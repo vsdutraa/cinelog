@@ -1,5 +1,5 @@
 export type Movie = {
-  id: number;
+  id: string;
   title: string;
   release_date: string;
   overview: string;
@@ -8,8 +8,12 @@ export type Movie = {
   backdrop_path: string;
 };
 
+export type Director = {
+  name: string;
+};
+
 export type User = {
-  id: number;
+  id: string;
   username: string;
   email: string;
 };

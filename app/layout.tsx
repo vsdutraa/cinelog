@@ -26,7 +26,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={font.className}>
           <Navbar />
-          <main className="container mx-auto px-4 md:px-6">
+          <main className="container mx-auto px-4 md:px-6 py-4 md:py-6">
             {children}
             <ToastContainer position="bottom-center" />
           </main>

@@ -6,7 +6,7 @@ const MoviePoster = ({ movie }: { movie: Movie }) => {
       <img
         src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
         alt={movie.title}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover rounded-md"
         draggable="false"
       />
     </div>

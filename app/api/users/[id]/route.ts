@@ -14,7 +14,7 @@ export async function GET(
     const id = (await params).id;
 
     if (!id) {
-      return NextResponse.json({ message: "id is required." }, { status: 400 });
+      return NextResponse.json({ message: "ID is required." }, { status: 400 });
     }
 
     // check if params.id is a valid MongoDB ObjectId.
@@ -37,6 +37,64 @@ export async function GET(
     );
   } catch (error: unknown) {
     console.error("Error in GET /api/users/[id]:", error);
+    return NextResponse.json(
+      { message: "Internal server error." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    await connectMongoDB();
+
+    const id = (await params).id;
+
+    if (!id) {
+      return NextResponse.json({ message: "id is required." }, { status: 400 });
+    }
+
+    if (!mongoose.isValidObjectId(id)) {
+      return NextResponse.json(
+        { message: "Invalid ID format." },
+        { status: 400 }
+      );
+    }
+
+    const body = await req.json();
+
+    if (!body || Object.keys(body).length === 0) {
+      return NextResponse.json(
+        { message: "Request body is required." },
+        { status: 400 }
+      );
+    }
+
+    const updatedUser = await User.findOneAndUpdate({ _id: id }, body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedUser) {
+      return NextResponse.json({ message: "User not found." }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      {
+        message: "User updated successfully.",
+        user: {
+          id: updatedUser._id,
+          username: updatedUser.username,
+          email: updatedUser.email,
+        },
+      },
+      { status: 200 }
+    );
+  } catch (error: unknown) {
+    console.error("Error in PUT /api/users/[id]:", error);
     return NextResponse.json(
       { message: "Internal server error." },
       { status: 500 }
