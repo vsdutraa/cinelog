@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import CardWrapper from "@/components/auth/card-wrapper";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "@/schema";
+import { LoginSchema } from "@/models/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useFormStatus } from "react-dom";

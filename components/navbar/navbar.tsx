@@ -3,7 +3,7 @@ import NavbarMobile from "@/components/navbar/navbar-mobile";
 
 const Navbar = async () => {
   return (
-    <nav className="border-b">
+    <nav className="border-b mb-8">
       {/* visible only on medium and larger screens */}
       <div className="hidden md:flex">
         <NavbarLarge />

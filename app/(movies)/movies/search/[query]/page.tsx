@@ -1,8 +1,8 @@
 // next imports
 import Link from "next/link";
 
-import { Movie } from "@/lib/types";
-import { searchMovies } from "@/lib/tmdb";
+import { Movie } from "@/models/types/types";
+import { searchMovies } from "@/app/api/integrations/tmdb/tmdb";
 // components
 import { Separator } from "@/components/ui/separator";
 

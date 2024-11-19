@@ -1,4 +1,4 @@
-import { Movie } from "@/lib/types";
+import { Movie } from "@/models/types/types";
 
 const MoviePoster = ({ movie }: { movie: Movie }) => {
   return (

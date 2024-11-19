@@ -1,4 +1,7 @@
-import { fetchMovieById, fetchMovieDirector } from "@/lib/tmdb";
+import {
+  fetchMovieById,
+  fetchMovieDirector,
+} from "@/app/api/integrations/tmdb/tmdb";
 import MoviePoster from "@/components/movies/movie-poster";
 
 const MovieDetails = async ({

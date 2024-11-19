@@ -1,5 +1,5 @@
 import "react-toastify/dist/ReactToastify.css";
-import "./globals.css";
+import "@/styles/globals.css";
 import type { Metadata } from "next";
 
 import { Outfit } from "next/font/google";

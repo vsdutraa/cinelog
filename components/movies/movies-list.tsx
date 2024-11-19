@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Movie } from "@/lib/types";
+import { Movie } from "@/models/types/types";
 import { Button } from "@/components/ui/button";
-import { fetchPopularMovies } from "@/lib/tmdb";
+import { fetchPopularMovies } from "@/app/api/integrations/tmdb/tmdb";
 
 const MoviesList = () => {
   const [movies, setMovies] = useState<Movie[]>([]);

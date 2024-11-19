@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import CardWrapper from "@/components/auth/card-wrapper";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterSchema } from "@/schema";
+import { RegisterSchema } from "@/models/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useFormStatus } from "react-dom";
@@ -40,7 +40,7 @@ const RegisterForm = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("api/auth/register", {
+      const res = await fetch("api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

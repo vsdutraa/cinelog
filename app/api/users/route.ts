@@ -1,39 +1,54 @@
-import User from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
+import { connectMongoDB } from "@/lib/database/mongodb";
+import User from "@/models/database/user-schema";
+import bcrypt from "bcrypt";
 
-export async function GET(req: NextRequest) {
+// fetch all users
+export async function GET(req: NextRequest) {}
+
+// register an user
+export async function POST(req: NextRequest) {
   try {
-    const username = req.nextUrl.searchParams.get("username");
+    await connectMongoDB();
 
-    if (!username) {
+    const { email, username, password, confirmPassword } = await req.json();
+
+    // Verificar se o e-mail já está em uso
+    const existingEmail = await User.findOne({ email }).select("_id");
+    if (existingEmail) {
       return NextResponse.json(
-        { message: "Username is required." },
+        { message: "Email is already in use." },
         { status: 400 }
       );
     }
 
-    const user = await User.findOne({ username });
-
-    if (!user) {
-      return NextResponse.json({ message: "User not found." }, { status: 404 });
+    // Verificar se o username já está em uso
+    const existingUsername = await User.findOne({ username }).select("_id");
+    if (existingUsername) {
+      return NextResponse.json(
+        { message: "Username is already in use." },
+        { status: 400 }
+      );
     }
 
-    const { _id, username: name, email } = user;
+    // check if passwords match
+    if (password !== confirmPassword) {
+      return NextResponse.json(
+        { message: "Passwords do not match." },
+        { status: 400 }
+      );
+    }
 
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await User.create({ email, username, password: hashedPassword });
+
+    return NextResponse.json({ message: "User registered." }, { status: 201 });
+  } catch (error: unknown) {
+    console.error("Error in POST /api/users:", error);
     return NextResponse.json(
-      {
-        user: {
-          id: _id,
-          username: name,
-          email,
-        },
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    return NextResponse.json(
-      { message: "An error occurred while searching for the user." },
+      { message: "Internal server error." },
       { status: 500 }
     );
   }

@@ -1,19 +1,24 @@
+import ProfileLayout from "@/components/profile/profile-layout";
+
 const UserProfilePage = async ({
   params,
 }: {
   params: Promise<{ username: string }>;
 }) => {
   const username = (await params).username;
+
   const res = await fetch(
-    `http://localhost:3000/api/users?username=${username}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${username}`
   );
-  const { user, message } = await res.json();
+  const data = await res.json();
+
+  const { user, message } = data;
 
   if (!user) {
     return <div>{message}</div>;
   }
 
-  return <div>{user.username}</div>;
+  return <ProfileLayout user={user} />;
 };
 
 export default UserProfilePage;

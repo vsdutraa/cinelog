@@ -1,4 +1,4 @@
-import { fetchPopularMovies } from "@/lib/tmdb";
+import { fetchPopularMovies } from "@/app/api/integrations/tmdb/tmdb";
 import MovieCarousel from "@/components/movies/movie-carousel";
 import MoviePoster from "@/components/movies/movie-poster";
 
@@ -7,7 +7,7 @@ const Dashboard = async () => {
   const movies = data?.results || [];
 
   return (
-    <div className="mt-4">
+    <div>
       {movies && <MoviePoster movie={movies[0]} />}
 
       <h1 className="relative mt-6 text-black text-2xl sm:text-3xl md:text-4xl font-bold text-center leading-snug px-4">

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper/modules";
 import "swiper/css";
-import { Movie } from "@/lib/types";
+import { Movie } from "@/models/types/types";
 
 const MovieCarousel = ({ movies }: { movies: Movie[] }) => {
   return (
@@ -17,8 +17,8 @@ const MovieCarousel = ({ movies }: { movies: Movie[] }) => {
           loop={true}
           breakpoints={{
             320: { slidesPerView: 2 },
-            640: { slidesPerView: 4 },
-            1024: { slidesPerView: 7 },
+            640: { slidesPerView: 3 },
+            1024: { slidesPerView: 5 },
           }}
         >
           {movies.map((movie) => (

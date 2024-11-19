@@ -7,3 +7,9 @@ export type Movie = {
   poster_path: string;
   backdrop_path: string;
 };
+
+export type User = {
+  id: number;
+  username: string;
+  email: string;
+};
