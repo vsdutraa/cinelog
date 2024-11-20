@@ -11,11 +11,11 @@ interface MovieTitleProps {
 }
 
 const baseClasses =
-  "font-serif font-black tracking-tighter leading-6 text-pretty";
+  "font-serif font-black tracking-tighter leading-5 text-pretty";
 
 const sizeClasses = {
   lg: "text-2xl md:text-3xl lg:text-4xl",
-  md: "text-lg md:text-xl lg:text-2xl",
+  md: "text-md md:text-lg lg:text-xl",
 };
 
 const MovieTitle: React.FC<MovieTitleProps> = ({

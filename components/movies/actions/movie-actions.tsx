@@ -16,6 +16,7 @@ const MovieActions = () => {
   return (
     <Card className="w-full">
       <CardHeader></CardHeader>
+      <CardContent>Card Content</CardContent>
     </Card>
   );
 };

@@ -2,30 +2,43 @@ import Link from "next/link";
 import { Movie, Person } from "@/models/types/types";
 import MovieCard from "@/components/movies/movie-card";
 import MovieTitle from "@/components/movies/movie-title";
+import MovieInfo from "@/components/movies/details/content/movie-info";
 
 interface MovieSearchItemProps {
-  movie: Movie;
+  id: string;
+  title: string;
+  posterPath: string;
+  releaseYear: string;
+  directorName: string;
 }
 
-const MovieSearchItem: React.FC<MovieSearchItemProps> = ({ movie }) => {
-  const director = movie.crew?.find(
-    (person: Person) => person.job === "Director",
-  );
-
+const MovieSearchItem: React.FC<MovieSearchItemProps> = ({
+  id,
+  title,
+  posterPath,
+  releaseYear,
+  directorName,
+}) => {
   return (
-    <div key={`${movie.id}`} className="flex justify-between space-x-4">
+    <div key={id} className="flex justify-between space-x-4">
       {/* left side */}
-      <MovieCard movie={movie} className="w-24" />
+      <MovieCard
+        id={id}
+        title={title}
+        posterPath={posterPath}
+        className="w-24 rounded-none"
+      />
 
       {/* right side */}
-      <div className="flex w-full flex-col justify-between">
-        <MovieTitle movie={movie} size="md" />
-        {director && (
-          <p className="font-light">
-            <span className="text-muted-foreground">Directed by</span>{" "}
-            {director.name}
-          </p>
-        )}
+      <div className="pb- flex w-full flex-col justify-between">
+        <div className="flex items-center space-x-2">
+          <MovieTitle id={id} title={title} size="md" />
+        </div>
+        <MovieInfo
+          releaseYear={releaseYear}
+          directorName={directorName}
+          size="sm"
+        />
       </div>
     </div>
   );
