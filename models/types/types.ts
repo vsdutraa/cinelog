@@ -6,10 +6,15 @@ export type Movie = {
   vote_average: number;
   poster_path: string;
   backdrop_path: string;
+  crew: Person[];
+  cast: Person[];
 };
 
-export type Director = {
+export type Person = {
+  id: string;
   name: string;
+  job?: string;
+  character?: string;
 };
 
 export type User = {

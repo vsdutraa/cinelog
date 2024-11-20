@@ -1,4 +1,10 @@
 import { NextResponse } from "next/server";
+import {
+  addCreditsToMovie,
+  addCreditsToMovies,
+  filterMovies,
+  isMovieComplete,
+} from "./tmdb-utils";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 
@@ -22,8 +28,12 @@ export const fetchPopularMovies = async (page: number = 1) => {
       );
     }
 
-    const movies = await res.json();
-    return NextResponse.json(movies, { status: 200 });
+    const data = await res.json();
+    const movies = data.results;
+    const filteredMovies = filterMovies(movies);
+    const moviesWithCredits = await addCreditsToMovies(filteredMovies);
+
+    return NextResponse.json(moviesWithCredits, { status: 200 });
   } catch (error) {
     console.error("Error fetching popular movies:", error);
     return NextResponse.json(
@@ -56,7 +66,16 @@ export const fetchMovieById = async (id: string) => {
 
     const movie = await res.json();
 
-    return NextResponse.json(movie, { status: 200 });
+    if (!isMovieComplete(movie)) {
+      return NextResponse.json(
+        { message: "Movie not found." },
+        { status: 404 }
+      );
+    }
+
+    const movieWithCredits = await addCreditsToMovie(movie);
+
+    return NextResponse.json(movieWithCredits, { status: 200 });
   } catch (error) {
     console.error(`Error fetching movie by ID (${id}):`, error);
     return NextResponse.json(
@@ -90,8 +109,13 @@ export const searchMovies = async (query: string) => {
       );
     }
 
-    const movies = await res.json();
-    return NextResponse.json(movies, { status: 200 });
+    const data = await res.json();
+    const movies = data.results;
+
+    const filteredMovies = filterMovies(movies);
+    const moviesWithCredits = await addCreditsToMovies(filteredMovies);
+
+    return NextResponse.json(moviesWithCredits, { status: 200 });
   } catch (error) {
     console.error("Error searching movies:", error);
     return NextResponse.json(
@@ -101,7 +125,7 @@ export const searchMovies = async (query: string) => {
   }
 };
 
-export const fetchMovieDirector = async (id: string) => {
+export const fetchMovieCredits = async (id: string) => {
   try {
     if (!id) {
       return NextResponse.json({ message: "ID is required." }, { status: 400 });
@@ -122,16 +146,9 @@ export const fetchMovieDirector = async (id: string) => {
       );
     }
 
-    // all credits
-    const data = await res.json();
+    const credits = await res.json();
 
-    const director = data.crew.find((person: any) => person.job === "Director");
-
-    if (!director) {
-      return NextResponse.json("Unknown", { status: 404 });
-    }
-
-    return NextResponse.json(director, { status: 200 });
+    return NextResponse.json(credits, { status: 200 });
   } catch (error) {
     console.error("Error searching for director:", error);
     return NextResponse.json(

@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Movie } from "@/models/types/types";
-import { Button } from "@/components/ui/button";
 import { fetchPopularMovies } from "@/app/api/integrations/tmdb/tmdb";
+import { Button } from "@/components/ui/button";
+import MovieCard from "@/components/movies/details/movie-card";
 
 const MoviesList = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -15,8 +16,7 @@ const MoviesList = () => {
     try {
       const res = await fetchPopularMovies(page);
       const data = await res.json();
-      const movies = data?.results || [];
-      console.log(movies);
+      const movies = data;
 
       return movies;
     } catch (error) {
@@ -55,14 +55,7 @@ const MoviesList = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
         {movies.map((movie) => (
           <Link href={`/movies/${movie.id}`} key={movie.id}>
-            <div className="rounded-sm shadow-sm overflow-hidden aspect-[2/3]">
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                className="w-full h-full object-cover rounded-md"
-                draggable="false"
-              />
-            </div>
+            <MovieCard movie={movie} variant="list" />
           </Link>
         ))}
       </div>

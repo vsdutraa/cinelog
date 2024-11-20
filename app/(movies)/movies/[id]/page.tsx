@@ -1,9 +1,7 @@
-import {
-  fetchMovieById,
-  fetchMovieDirector,
-} from "@/app/api/integrations/tmdb/tmdb";
+import { fetchMovieById } from "@/app/api/integrations/tmdb/tmdb";
 import MovieTitle from "@/components/movies/details/movie-title";
 import MoviePoster from "@/components/movies/details/movie-poster";
+import MovieCard from "@/components/movies/details/movie-card";
 
 const MovieDetails = async ({
   params,
@@ -12,40 +10,29 @@ const MovieDetails = async ({
 }) => {
   const id = (await params).id;
 
-  const movieRes = await fetchMovieById(id);
-  if (!movieRes.ok) {
-    const { message } = await movieRes.json();
+  const res = await fetchMovieById(id);
+  if (!res.ok) {
+    const { message } = await res.json();
     return <p>{message}</p>;
   }
-  const movie = await movieRes.json();
-
-  const directorRes = await fetchMovieDirector(id);
-  const director = await directorRes.json();
-
-  // const director = await fetchMovieDirector(id);
+  const movie = await res.json();
+  console.log(movie);
 
   return (
-    <div className="container mx-auto">
-      {/* <MoviePoster movie={movie} /> */}
+    <div className="container mx-auto space-y-4">
+      <MoviePoster movie={movie} />
 
-      <MovieTitle movie={movie} director={director} />
+      <MovieTitle movie={movie} />
 
-      <div className="flex flex-col md:flex-row items-center md:items-start space-x-4">
-        <div className="w-full md:w-1/5 mx-auto shadow-md">
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            alt={movie.title}
-            className="rounded-md shadow-lg"
-            draggable="false"
-          />
-        </div>
+      <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
+        <MovieCard movie={movie} />
 
-        <div className="w-full md:w-4/5">
-          <p className="text-lg mb-4">
+        <div className="w-full space-y-2">
+          <p className="text-lg">
             <span className="font-semibold">Rating:</span>{" "}
             {movie.vote_average.toFixed(1)} / 10
           </p>
-          <p className="text-lg mb-4">{movie.overview}</p>
+          <p className="text-lg leading-6 text-justify">{movie.overview}</p>
         </div>
       </div>
     </div>

@@ -14,19 +14,24 @@ const SearchResults = async ({
 
   const res = await searchMovies(query);
   const data = await res.json();
-  const movies = data.results;
+  const movies = data;
+  console.log(movies);
 
   return (
-    <div>
-      <h1 className="text-xl font-semibold mb-4">
-        Results for "{decodedQuery}"
-      </h1>
+    <div className="space-y-4">
+      <div>
+        <h1 className="text-sm uppercase">
+          Showing matches for "{decodedQuery}"
+        </h1>
+        <Separator />
+      </div>
+
       {movies.length > 0 ? (
         <ul className="space-y-4">
           {movies.map(
             (movie: Movie) =>
               movie.poster_path && (
-                <div key={movie.id}>
+                <div key={movie.id} className="space-y-4">
                   <MovieSearchItem movie={movie} />
                   <Separator />
                 </div>
