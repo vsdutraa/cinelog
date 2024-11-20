@@ -1,4 +1,4 @@
-import Profile from "@/components/profile/profile";
+import Profile from "@/components/user/profile/profile";
 
 const UserProfilePage = async ({
   params,
@@ -10,7 +10,7 @@ const UserProfilePage = async ({
 
   // fetch user
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${username}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${username}`,
   );
   const data = await res.json();
   const { user } = data;

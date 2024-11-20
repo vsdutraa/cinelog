@@ -18,13 +18,13 @@ export const fetchPopularMovies = async (page: number = 1) => {
           accept: "application/json",
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_BEARER_TOKEN}`,
         },
-      }
+      },
     );
 
     if (!res.ok) {
       return NextResponse.json(
         { message: "Failed to fetch popular movies." },
-        { status: res.status }
+        { status: res.status },
       );
     }
 
@@ -38,7 +38,7 @@ export const fetchPopularMovies = async (page: number = 1) => {
     console.error("Error fetching popular movies:", error);
     return NextResponse.json(
       { message: "Internal server error." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -60,7 +60,7 @@ export const fetchMovieById = async (id: string) => {
     if (!res.ok) {
       return NextResponse.json(
         { message: "Movie not found." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -69,7 +69,7 @@ export const fetchMovieById = async (id: string) => {
     if (!isMovieComplete(movie)) {
       return NextResponse.json(
         { message: "Movie not found." },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -80,7 +80,7 @@ export const fetchMovieById = async (id: string) => {
     console.error(`Error fetching movie by ID (${id}):`, error);
     return NextResponse.json(
       { message: "Internal server error." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -90,7 +90,7 @@ export const searchMovies = async (query: string) => {
     if (!query) {
       return NextResponse.json(
         { message: "Query is required." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -105,7 +105,7 @@ export const searchMovies = async (query: string) => {
     if (!res.ok) {
       return NextResponse.json(
         { message: `Failed to search data for: ${query}` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -120,7 +120,7 @@ export const searchMovies = async (query: string) => {
     console.error("Error searching movies:", error);
     return NextResponse.json(
       { message: "Internal server error." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -142,7 +142,7 @@ export const fetchMovieCredits = async (id: string) => {
     if (!res.ok) {
       return NextResponse.json(
         { message: `Failed to fetch credits for movie ID: ${id}` },
-        { status: res.status }
+        { status: res.status },
       );
     }
 
@@ -153,7 +153,7 @@ export const fetchMovieCredits = async (id: string) => {
     console.error("Error searching for director:", error);
     return NextResponse.json(
       { message: "Internal server error." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

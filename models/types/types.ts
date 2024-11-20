@@ -3,11 +3,13 @@ export type Movie = {
   title: string;
   release_date: string;
   overview: string;
+  tagline?: string;
   vote_average: number;
   poster_path: string;
   backdrop_path: string;
   crew: Person[];
   cast: Person[];
+  genres: [];
 };
 
 export type Person = {

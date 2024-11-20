@@ -10,14 +10,14 @@ import {
   SheetHeader,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import UserActions from "@/components/auth/user-actions";
+import UserActions from "@/components/user/user-actions";
 
 const NavbarSheet = async () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline">
-          <Menu className="w-6 h-6" />
+          <Menu className="h-6 w-6" />
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="space-y-4">

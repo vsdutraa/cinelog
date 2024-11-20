@@ -18,26 +18,26 @@ const userSchema = new Schema(
     },
     firstName: {
       type: String,
-      required: false,
     },
     lastName: {
       type: String,
-      required: false,
     },
     location: {
       type: String,
-      required: false,
     },
     website: {
       type: String,
-      required: false,
     },
     bio: {
       type: String,
-      required: false,
     },
+    savedMovies: [
+      {
+        type: String,
+      },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = models.User || mongoose.model("User", userSchema);
