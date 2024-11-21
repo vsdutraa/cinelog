@@ -3,10 +3,11 @@ import { fetchMovieById } from "@/app/api/integrations/tmdb/tmdb";
 import { Movie, Person } from "@/models/types/types";
 
 import MoviePoster from "@/components/movies/movie-poster";
-import MovieCard from "@/components/movies/movie-card";
+import MovieCard from "@/components/movies/card/movie-card";
 import MovieDetails from "@/components/movies/details/movie-details";
 import MovieActions from "@/components/movies/actions/movie-actions";
 import MovieGenreBadges from "@/components/movies/details/content/movie-genres";
+import { getDirectorName, getReleaseYear } from "@/utils/movieUtils";
 
 const MovieDetailsPage = async ({
   params,
@@ -30,14 +31,9 @@ const MovieDetailsPage = async ({
     crew,
     cast,
   } = movie;
-  const releaseYear = releaseDate.slice(0, 4);
+  const releaseYear = getReleaseYear(releaseDate);
+  const directorName = getDirectorName(crew);
   const genres = movie.genres?.map((genre: any) => genre.name) || [];
-  console.log(genres);
-
-  const director = movie.crew?.find(
-    (person: Person) => person.job === "Director",
-  );
-  const directorName = director?.name || "Unknown";
 
   return (
     <div className="container space-y-4">
@@ -59,8 +55,6 @@ const MovieDetailsPage = async ({
           />
         </div>
       </div>
-
-      {/* <MovieActions /> */}
     </div>
   );
 };

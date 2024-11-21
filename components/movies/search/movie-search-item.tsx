@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Movie, Person } from "@/models/types/types";
-import MovieCard from "@/components/movies/movie-card";
+import MovieCard from "@/components/movies/card/movie-card";
 import MovieTitle from "@/components/movies/movie-title";
 import MovieInfo from "@/components/movies/details/content/movie-info";
 

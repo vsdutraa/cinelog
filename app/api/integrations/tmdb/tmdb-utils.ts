@@ -1,8 +1,7 @@
 import { Movie } from "@/models/types/types";
 import { fetchMovieCredits } from "./tmdb";
 
-// filter single movie
-const isMovieComplete = (movie: Movie): boolean => {
+export const isMovieComplete = (movie: Movie): boolean => {
   return (
     !!movie.title &&
     !!movie.release_date &&
@@ -13,8 +12,7 @@ const isMovieComplete = (movie: Movie): boolean => {
   );
 };
 
-// filter array of movies
-const filterMovies = (data: Movie[]): Movie[] => {
+export const filterMovies = (data: Movie[]): Movie[] => {
   return data.filter(isMovieComplete);
 };
 
@@ -28,7 +26,7 @@ export const addCreditsToMovies = async (movies: Movie[]): Promise<Movie[]> => {
       movie.cast = credits.cast || [];
 
       return movie;
-    })
+    }),
   );
 
   return moviesWithCredits;
@@ -43,5 +41,3 @@ export const addCreditsToMovie = async (movie: Movie): Promise<Movie> => {
 
   return movie;
 };
-
-export { isMovieComplete, filterMovies };

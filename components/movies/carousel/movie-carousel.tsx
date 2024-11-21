@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel } from "swiper/modules";
 import "swiper/css";
 import { Movie } from "@/models/types/types";
-import MovieCard from "@/components/movies/movie-card";
+import MovieCard from "@/components/movies/card/movie-card";
 
 interface MovieCarouselProps {
   movies: Movie[];
