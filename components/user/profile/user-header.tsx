@@ -35,11 +35,9 @@ const UserHeader: React.FC<UserHeaderProps> = ({ user, isOwner }) => {
               </Button>
             )}
           </div>
-          {/* {bio && <p className="text-sm text-muted-foreground">oi</p>} */}
         </div>
       </div>
 
-      {/* right side */}
       <UserStats />
     </div>
   );

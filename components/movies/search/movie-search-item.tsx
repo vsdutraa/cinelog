@@ -1,15 +1,18 @@
 import Link from "next/link";
 import { Movie, Person } from "@/models/types/types";
-import MovieCard from "@/components/movies/card/movie-card";
-import MovieTitle from "@/components/movies/movie-title";
-import MovieInfo from "@/components/movies/details/content/movie-info";
+import { MovieCard } from "@/components/movies/movie-card";
+import {
+  MovieTitle,
+  MovieTitleSkeleton,
+} from "@/components/movies/movie-title";
+import { MovieInfo } from "@/components/movies/details/movie-info";
 
 interface MovieSearchItemProps {
   id: string;
   title: string;
   posterPath: string;
   releaseYear: string;
-  directorName: string;
+  directorName?: string;
 }
 
 const MovieSearchItem: React.FC<MovieSearchItemProps> = ({
@@ -37,7 +40,7 @@ const MovieSearchItem: React.FC<MovieSearchItemProps> = ({
         <MovieInfo
           releaseYear={releaseYear}
           directorName={directorName}
-          size="sm"
+          className="text-sm"
         />
       </div>
     </div>

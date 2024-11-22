@@ -1,61 +1,60 @@
-import { fetchMovieById } from "@/app/api/integrations/tmdb/tmdb";
+import {
+  fetchMovieById,
+  fetchMovieDirector,
+} from "@/app/api/integrations/tmdb/tmdb";
 
-import { Movie, Person } from "@/models/types/types";
-
-import MoviePoster from "@/components/movies/movie-poster";
-import MovieCard from "@/components/movies/card/movie-card";
-import MovieDetails from "@/components/movies/details/movie-details";
-import MovieActions from "@/components/movies/actions/movie-actions";
-import MovieGenreBadges from "@/components/movies/details/content/movie-genres";
-import { getDirectorName, getReleaseYear } from "@/utils/movieUtils";
+import { MovieCard } from "@/components/movies/movie-card";
+import { MovieGenreBadges } from "@/components/movies/details/movie-genre-badges";
+import { MovieTitle } from "@/components/movies/movie-title";
+import { MovieInfo } from "@/components/movies/details/movie-info";
+import { MovieSynopsis } from "@/components/movies/details/movie-synopsis";
 
 const MovieDetailsPage = async ({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) => {
-  const res = await fetchMovieById((await params).id);
-  if (!res.ok) {
-    const { message } = await res.json();
-    return <p>{message}</p>;
-  }
-  const movie: Movie = await res.json();
+  try {
+    const { id: movieId } = await params;
+    const movie = await fetchMovieById(movieId);
+    const {
+      id,
+      title,
+      tagline,
+      overview,
+      release_date: releaseDate,
+      poster_path: posterPath,
+      genres,
+    } = movie;
 
-  const {
-    id,
-    title,
-    tagline,
-    overview,
-    release_date: releaseDate,
-    poster_path: posterPath,
-    crew,
-    cast,
-  } = movie;
-  const releaseYear = getReleaseYear(releaseDate);
-  const directorName = getDirectorName(crew);
-  const genres = movie.genres?.map((genre: any) => genre.name) || [];
+    const releaseYear = releaseDate.slice(0, 4);
+    const { name: directorName } = await fetchMovieDirector(movieId);
 
-  return (
-    <div className="container space-y-4">
-      <div className="grid grid-cols-1 space-y-6 md:grid-cols-4 md:space-x-6 md:space-y-0">
-        {/* left side */}
-        <div className="flex flex-col space-y-2">
+    return (
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+        <div className="space-y-2">
           <MovieCard id={id} title={title} posterPath={posterPath} />
           <MovieGenreBadges genres={genres} />
         </div>
-        {/* right side */}
-        <div className="col-span-3">
-          <MovieDetails
-            id={id}
-            title={title}
-            tagline={tagline}
-            overview={overview}
-            releaseYear={releaseYear}
-            directorName={directorName}
-          />
+
+        <div className="space-y-4 md:col-span-2 lg:col-span-3">
+          <div>
+            <MovieTitle id={id} title={title} />
+            <MovieInfo
+              releaseYear={releaseYear}
+              directorName={directorName}
+              className="text-md"
+            />
+          </div>
+
+          <MovieSynopsis tagline={tagline} overview={overview} />
         </div>
       </div>
-    </div>
-  );
+    );
+  } catch (error: any) {
+    console.error("Error fetching movie: ", error.message);
+
+    return <div>Error loading movie data. Please try again later.</div>;
+  }
 };
 export default MovieDetailsPage;

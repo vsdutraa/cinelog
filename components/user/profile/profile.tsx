@@ -11,8 +11,6 @@ interface ProfileProps {
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
   const { data: session } = useSession();
-
-  const { username } = user;
   const isOwner = session?.user.id === user.id;
 
   return (

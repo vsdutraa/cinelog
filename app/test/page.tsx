@@ -1,19 +1,11 @@
-// import MovieActions from "@/components/movies/actions/movie-actions";
-"use client";
-
-import { useEffect } from "react";
-import { fetchMovieById } from "../api/integrations/tmdb/tmdb";
+import MovieActions from "@/components/movies/actions/movie-actions";
 
 const TestPage = () => {
-  useEffect(() => {
-    const load = async () => {
-      const res = await fetchMovieById("912649");
-      const data = await res.json();
-      console.log(data);
-    };
-    load();
-  }, []);
-
-  return <div>{/* <MovieActions /> */}</div>;
+  return (
+    <div>
+      {/* <MovieActions /> */}
+      <p className="text-2xl font-black">Yohan</p>
+    </div>
+  );
 };
 export default TestPage;

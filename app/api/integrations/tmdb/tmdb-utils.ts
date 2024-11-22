@@ -15,29 +15,3 @@ export const isMovieComplete = (movie: Movie): boolean => {
 export const filterMovies = (data: Movie[]): Movie[] => {
   return data.filter(isMovieComplete);
 };
-
-export const addCreditsToMovies = async (movies: Movie[]): Promise<Movie[]> => {
-  const moviesWithCredits = await Promise.all(
-    movies.map(async (movie: Movie) => {
-      const res = await fetchMovieCredits(movie.id);
-      const credits = await res.json();
-
-      movie.crew = credits.crew || [];
-      movie.cast = credits.cast || [];
-
-      return movie;
-    }),
-  );
-
-  return moviesWithCredits;
-};
-
-export const addCreditsToMovie = async (movie: Movie): Promise<Movie> => {
-  const res = await fetchMovieCredits(movie.id);
-  const credits = await res.json();
-
-  movie.crew = credits.crew || [];
-  movie.cast = credits.cast || [];
-
-  return movie;
-};

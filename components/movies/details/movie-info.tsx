@@ -1,27 +1,22 @@
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface MovieInfoProps {
   releaseYear: string;
   directorName?: string;
-  size?: "lg" | "md" | "sm";
+  className?: string;
 }
 
-const sizeClasses = {
-  lg: "text-lg",
-  md: "text-md",
-  sm: "text-sm",
-};
-
-const MovieInfo: React.FC<MovieInfoProps> = ({
+const MovieInfo = ({
   releaseYear,
   directorName,
-  size = "lg",
-}) => {
+  className,
+}: MovieInfoProps) => {
   return (
     <div
       className={cn(
         "flex items-center space-x-1.5 text-lg font-light",
-        sizeClasses[size],
+        className,
       )}
     >
       <p>{releaseYear}.</p>
@@ -32,4 +27,13 @@ const MovieInfo: React.FC<MovieInfoProps> = ({
     </div>
   );
 };
-export default MovieInfo;
+
+const MovieInfoSkeleton = () => {
+  return (
+    <div className="flex items-center space-x-1.5 text-lg font-light">
+      <Skeleton className="h-4 w-56" />
+    </div>
+  );
+};
+
+export { MovieInfo, MovieInfoSkeleton };

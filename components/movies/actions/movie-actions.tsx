@@ -1,4 +1,7 @@
 "use client";
+import { useSession } from "next-auth/react";
+
+import { Eye, Heart, Clock } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -7,7 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useSession } from "next-auth/react";
+import { Separator } from "@/components/ui/separator";
+import ActionButton from "@/components/movies/actions/action-button";
 
 const MovieActions = () => {
   const { data: session } = useSession();
@@ -15,8 +19,19 @@ const MovieActions = () => {
 
   return (
     <Card className="w-full">
-      <CardHeader></CardHeader>
-      <CardContent>Card Content</CardContent>
+      <CardContent className="py-4">
+        <div className="grid w-full items-center justify-center gap-2 xl:grid-cols-3">
+          <ActionButton label="Watch">
+            <Eye />
+          </ActionButton>
+          <ActionButton label="Like">
+            <Heart />
+          </ActionButton>
+          <ActionButton label="Watchlist">
+            <Clock />
+          </ActionButton>
+        </div>
+      </CardContent>
     </Card>
   );
 };

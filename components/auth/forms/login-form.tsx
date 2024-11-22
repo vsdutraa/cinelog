@@ -55,7 +55,7 @@ const LoginForm = () => {
       } else {
         setLoading(false);
         toast.success("Login successful.");
-        router.replace("/");
+        router.push("/");
       }
     } catch (error) {
       toast.error("An unexpected error occurred.");

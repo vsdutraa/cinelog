@@ -7,9 +7,10 @@ export type Movie = {
   vote_average: number;
   poster_path: string;
   backdrop_path: string;
-  crew: Person[];
-  cast: Person[];
-  genres: [];
+  crew?: Person[];
+  cast?: Person[];
+  genres: [{ id: string; name: string }];
+  directorName?: string;
 };
 
 export type Person = {

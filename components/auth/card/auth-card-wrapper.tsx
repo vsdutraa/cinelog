@@ -26,7 +26,7 @@ const CardWrapper: React.FC<CardWrapperProps> = ({
   children,
 }) => {
   return (
-    <Card className="md:1/2 -mt-48 w-full shadow-md xl:w-1/4">
+    <Card className="-mt-48 w-full shadow-md md:w-1/2 xl:w-1/4">
       <CardHeader>
         <AuthHeader label={label} title={title} />
       </CardHeader>
