@@ -1,32 +1,30 @@
 "use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import { z } from "zod";
+
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
-import CardWrapper from "@/components/auth/card/auth-card-wrapper";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterSchema } from "@/models/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { useFormStatus } from "react-dom";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import AuthCard from "@/components/auth/card/auth-card";
+import { RegisterSchema, RegisterInput } from "@/lib/zod/auth-form";
 
 const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const form = useForm({
+  const form = useForm<RegisterInput>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
@@ -36,11 +34,11 @@ const RegisterForm = () => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof RegisterSchema>) => {
+  const onSubmit = async (data: RegisterInput) => {
     setLoading(true);
 
     try {
-      const res = await fetch("api/users", {
+      const res = await fetch("/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -50,8 +48,6 @@ const RegisterForm = () => {
 
       if (!res.ok) {
         toast.error(message);
-        setLoading(false);
-        return;
       } else {
         toast.success(message);
         form.reset();
@@ -59,14 +55,13 @@ const RegisterForm = () => {
       }
     } catch (error) {
       toast.error("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const { pending } = useFormStatus();
-
   return (
-    <CardWrapper
+    <AuthCard
       title="Register"
       label="Create an account"
       backButtonHref="/login"
@@ -132,12 +127,12 @@ const RegisterForm = () => {
               )}
             />
           </div>
-          <Button type="submit" className="w-full" disabled={pending}>
+          <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Loading..." : "Register"}
           </Button>
         </form>
       </Form>
-    </CardWrapper>
+    </AuthCard>
   );
 };
 

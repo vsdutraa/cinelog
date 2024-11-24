@@ -19,7 +19,7 @@ const MovieTitle = ({ id, title, size = "lg", className }: MovieTitleProps) => {
     <Link href={`/movies/${id}`}>
       <h1
         className={cn(
-          "text-pretty font-serif font-black leading-5 tracking-tighter",
+          "text-pretty font-serif font-black leading-5 tracking-tighter transition-all hover:text-muted-foreground",
           sizeClasses[size],
           className,
         )}
@@ -30,13 +30,4 @@ const MovieTitle = ({ id, title, size = "lg", className }: MovieTitleProps) => {
   );
 };
 
-const MovieTitleSkeleton = ({ size = "lg" }: { size?: "lg" | "md" }) => {
-  const sizeClasses = {
-    lg: "h-6 w-2/3 md:w-2/5 md:h-8",
-    md: "h-4 w-32 md:w-40 md:h-5",
-  };
-
-  return <Skeleton className={sizeClasses[size]} />;
-};
-
-export { MovieTitle, MovieTitleSkeleton };
+export default MovieTitle;

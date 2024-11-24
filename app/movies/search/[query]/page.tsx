@@ -1,57 +1,59 @@
-import { Movie } from "@/models/types/types";
-import {
-  enrichMoviesWithDirector,
-  fetchMovieDirector,
-  searchMovies,
-} from "@/app/api/integrations/tmdb/tmdb";
+import { Movie } from "@/types/db";
+import { searchMovies } from "@/lib/api/tmdb";
+import { filterDirector } from "@/lib/api/tmdb-utils";
 
 import MovieSearchItem from "@/components/movies/search/movie-search-item";
-import ResultsHeader from "@/components/movies/search/results-header";
 import { Separator } from "@/components/ui/separator";
+import { delay } from "@/lib/delay";
 
 const SearchResultsPage = async ({
   params,
 }: {
   params: Promise<{ query: string }>;
 }) => {
-  try {
-    const query = (await params).query;
-    const decodedQuery = decodeURIComponent(query);
-    const movies = await searchMovies(query);
-    const moviesWithDirectors = await enrichMoviesWithDirector(movies);
+  // await delay(2000);
 
-    return (
-      <div className="space-y-4">
-        <ResultsHeader title={`Showing matches for "${decodedQuery}"`} />
-        {movies.length < 1 && <p>There was no matches for your search term.</p>}
-        <div className="space-y-6">
-          {moviesWithDirectors.map((movie: Movie) => {
-            const {
-              id,
-              title,
-              poster_path: posterPath,
-              release_date: releaseDate,
-              directorName,
-            } = movie;
-            const releaseYear = releaseDate.slice(0, 4);
+  const query = (await params).query;
+  const decodedQuery = decodeURIComponent(query);
+  const movies = await searchMovies(query, {
+    credits: true,
+    alternativeTitles: true,
+  });
 
-            return (
-              <div key={id}>
-                <MovieSearchItem
-                  id={id}
-                  title={title}
-                  posterPath={posterPath}
-                  releaseYear={releaseYear}
-                  directorName={directorName}
-                />
-                <Separator />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  } catch (error: any) {}
+  if (movies.length < 1) {
+    return <p>Not found.</p>;
+  }
+
+  return (
+    <div className="space-y-6">
+      {movies.map((movie: Movie) => {
+        const {
+          id,
+          title,
+          poster_path,
+          release_date,
+          credits,
+          alternative_titles,
+        } = movie;
+        const director = filterDirector(credits);
+        const directorName = director.name;
+        const releaseYear = release_date.slice(0, 4);
+
+        return (
+          <div key={id}>
+            <MovieSearchItem
+              id={id}
+              title={title}
+              posterPath={poster_path}
+              releaseYear={releaseYear}
+              directorName={directorName}
+              alternativeTitles={alternative_titles}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default SearchResultsPage;

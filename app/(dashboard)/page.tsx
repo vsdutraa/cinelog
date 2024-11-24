@@ -1,6 +1,7 @@
-import { fetchPopularMovies } from "@/app/api/integrations/tmdb/tmdb";
-import MovieCarousel from "@/components/movies/movie-carousel";
+import { fetchPopularMovies } from "@/lib/api/tmdb";
 import MoviePoster from "@/components/movies/movie-poster";
+import MovieCarousel from "@/components/movies/movie-carousel";
+import { Separator } from "@/components/ui/separator";
 
 const Dashboard = async () => {
   const movies = await fetchPopularMovies();
@@ -14,7 +15,15 @@ const Dashboard = async () => {
         backdropPath={mostPopularMovie.backdrop_path}
       />
 
-      <MovieCarousel movies={movies} />
+      <div className="space-y-3">
+        <div>
+          <p className="text-sm uppercase text-muted-foreground">
+            Popular movies this week
+          </p>
+          <Separator />
+        </div>
+        <MovieCarousel movies={movies} />
+      </div>
     </div>
   );
 };

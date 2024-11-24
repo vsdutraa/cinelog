@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Profile from "@/components/user/profile/profile";
 
 const UserProfilePage = async ({
@@ -5,19 +6,14 @@ const UserProfilePage = async ({
 }: {
   params: Promise<{ username: string }>;
 }) => {
-  // params
-  const username = (await params).username;
-
-  // fetch user
+  const { username } = await params;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${username}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/username/${username}`,
   );
-  const data = await res.json();
-  const { user } = data;
-
-  if (!user) {
-    return <div>User not found</div>;
+  if (!res.ok) {
+    notFound();
   }
+  const user = await res.json();
 
   return <Profile user={user} />;
 };

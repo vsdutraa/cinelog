@@ -1,17 +1,15 @@
-import Link from "next/link";
-
 import NavbarSheet from "@/components/navbar/navbar-sheet";
 import SearchBar from "@/components/navbar/search-bar";
-import { ThemeSwitcher } from "@/components/theme/theme-switcher";
-import Logo from "./logo";
+import { ThemeSwitcher } from "@/components/navbar/theme-switcher";
+import Logo from "@/components/navbar/logo";
 
-const NavbarMobile = async () => {
+const NavbarMobile = () => {
   return (
-    <nav className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+    <nav className="flex w-full items-center justify-between md:hidden">
       <Logo />
 
       {/* right side */}
-      <div className="flex gap-2">
+      <div className="flex space-x-1.5">
         <SearchBar />
         <NavbarSheet />
         <ThemeSwitcher />

@@ -1,4 +1,4 @@
-import { Movie } from "@/models/types/types";
+import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 
 interface MoviePosterProps {
   title: string;
@@ -7,14 +7,11 @@ interface MoviePosterProps {
 
 const MoviePoster: React.FC<MoviePosterProps> = ({ title, backdropPath }) => {
   return (
-    <div className="relative h-[400px] w-full md:h-[600px]">
-      <img
-        src={`https://image.tmdb.org/t/p/original/${backdropPath}`}
-        alt={title}
-        className="h-full w-full rounded-md object-cover"
-        draggable="false"
-      />
-    </div>
+    <img
+      src={`https://image.tmdb.org/t/p/original/${backdropPath}`}
+      alt={title}
+      className="rounded-md"
+    />
   );
 };
 

@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { User } from "@/models/types/types";
+import { User } from "@/types/db";
 import { useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
@@ -14,14 +14,14 @@ interface UserHeaderProps {
   isOwner: boolean;
 }
 
-const UserHeader: React.FC<UserHeaderProps> = ({ user, isOwner }) => {
+const UserHeader = ({ user, isOwner }: UserHeaderProps) => {
   const { username } = user;
 
   return (
     <div className="container flex h-28 items-center justify-between">
       {/* left side */}
       <div className="flex items-center space-x-6">
-        <UserAvatar username={username} />
+        <UserAvatar />
         {/* user info */}
         <div className="flex flex-col">
           <div className="flex items-center space-x-5">

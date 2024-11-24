@@ -1,4 +1,5 @@
 {
   "reactSnippets.settings.importReactOnTop": false,
-  "reactSnippets.settings.prettierEnabled": false
+  "reactSnippets.settings.prettierEnabled": false,
+  "prettier.printWidth": 100
 }

@@ -1,9 +1,4 @@
-"use client";
-
-import Link from "next/link";
-// icons
 import { Menu } from "lucide-react";
-// components
 import {
   Sheet,
   SheetTrigger,
@@ -14,14 +9,13 @@ import {
 import { Button } from "@/components/ui/button";
 import UserActions from "@/components/user/user-actions";
 import NavbarLogo from "@/components/navbar/logo";
-import NavbarLinks from "./navbar-links";
-
+import NavbarLinks from "@/components/navbar/navbar-links";
 const NavbarSheet = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">
-          <Menu className="h-6 w-6" />
+        <Button variant="outline" size="icon">
+          <Menu className="h-[1.2rem] w-[1.2rem]" />
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="space-y-4">
@@ -31,9 +25,8 @@ const NavbarSheet = () => {
           </SheetTitle>
         </SheetHeader>
         <div className="flex flex-col space-y-4">
-          {/* nav links */}
           <NavbarLinks />
-          <UserActions variant="col" />
+          <UserActions />
         </div>
       </SheetContent>
     </Sheet>

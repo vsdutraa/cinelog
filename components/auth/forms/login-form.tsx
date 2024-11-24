@@ -11,10 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import CardWrapper from "@/components/auth/card/auth-card-wrapper";
+import AuthCard from "@/components/auth/card/auth-card";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema } from "@/models/zod";
+import { LoginInput, LoginSchema } from "@/lib/zod/auth-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useFormStatus } from "react-dom";
@@ -36,7 +36,7 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
+  const onSubmit = async (data: LoginInput) => {
     setLoading(true);
 
     const { email, password } = data;
@@ -49,23 +49,22 @@ const LoginForm = () => {
       });
 
       if (!res?.ok) {
-        setLoading(false);
         toast.error("Invalid credentials.");
-        return;
       } else {
-        setLoading(false);
         toast.success("Login successful.");
         router.push("/");
       }
     } catch (error) {
       toast.error("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const { pending } = useFormStatus();
 
   return (
-    <CardWrapper
+    <AuthCard
       title="Login"
       label="Login to your account"
       backButtonHref="/register"
@@ -110,7 +109,7 @@ const LoginForm = () => {
           </Button>
         </form>
       </Form>
-    </CardWrapper>
+    </AuthCard>
   );
 };
 

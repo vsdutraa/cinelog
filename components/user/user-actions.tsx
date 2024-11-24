@@ -1,25 +1,17 @@
-"use client";
-
+import { getServerSession } from "@/lib/auth/get-server-session";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import LogoutButton from "@/components/auth/buttons/logout-button";
 import { Button } from "@/components/ui/button";
 
-interface UserActionsProps {
-  variant?: "col" | "row";
-}
+const UserActions = async () => {
+  const session = await getServerSession();
 
-const UserActions = ({ variant = "row" }: UserActionsProps) => {
-  const { data: session } = useSession();
-
-  const layoutClasses =
-    variant === "col" ? "flex flex-col space-y-2" : "flex flex-row space-x-2";
   return (
     <div>
       {session ? (
         <LogoutButton />
       ) : (
-        <div className={layoutClasses}>
+        <div className="flex flex-col gap-2 md:flex-row">
           <Button variant="outline" asChild>
             <Link href="/login">Sign In</Link>
           </Button>

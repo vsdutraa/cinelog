@@ -1,55 +1,52 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectMongoDB } from "@/lib/database/mongodb";
-import User from "@/models/database/user-schema";
-import bcrypt from "bcrypt";
+import { RegisterSchema } from "@/lib/zod/auth-form";
+import { getUsers, createUser } from "@/services/user-service";
+import { ZodError } from "zod";
 
-// fetch all users
-export async function GET(req: NextRequest) {}
+export async function GET() {
+  try {
+    const users = await getUsers();
+    return NextResponse.json(users, { status: 200 });
+  } catch (error: any) {
+    console.error("Error in GET api/users", error);
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+    return NextResponse.json(
+      { message: "An unexpected error occurred" },
+      { status: 500 },
+    );
+  }
+}
 
-// register an user
 export async function POST(req: NextRequest) {
   try {
-    await connectMongoDB();
+    const body = await req.json();
+    const validatedData = RegisterSchema.parse(body);
 
-    const { email, username, password, confirmPassword } = await req.json();
+    const newUser = await createUser(validatedData);
 
-    // Verificar se o e-mail já está em uso
-    const existingEmail = await User.findOne({ email }).select("_id");
-    if (existingEmail) {
-      return NextResponse.json(
-        { message: "Email is already in use." },
-        { status: 400 }
-      );
-    }
-
-    // Verificar se o username já está em uso
-    const existingUsername = await User.findOne({ username }).select("_id");
-    if (existingUsername) {
-      return NextResponse.json(
-        { message: "Username is already in use." },
-        { status: 400 }
-      );
-    }
-
-    // check if passwords match
-    if (password !== confirmPassword) {
-      return NextResponse.json(
-        { message: "Passwords do not match." },
-        { status: 400 }
-      );
-    }
-
-    // hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await User.create({ email, username, password: hashedPassword });
-
-    return NextResponse.json({ message: "User registered." }, { status: 201 });
+    return NextResponse.json(
+      { message: "User registered successfully", user: newUser },
+      { status: 201 },
+    );
   } catch (error: unknown) {
     console.error("Error in POST /api/users:", error);
+
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        { message: "Validation failed", errors: error.errors },
+        { status: 400 },
+      );
+    }
+
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+
     return NextResponse.json(
-      { message: "Internal server error." },
-      { status: 500 }
+      { message: "An unexpected error occurred" },
+      { status: 500 },
     );
   }
 }

@@ -1,4 +1,4 @@
-const UserAvatar = ({ username }: { username: string }) => {
+const UserAvatar = () => {
   return (
     <div>
       <img

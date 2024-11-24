@@ -1,35 +1,36 @@
 "use client";
 
-import { redirect } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
 
 import { Search } from "lucide-react";
 
-export default function SearchBar() {
+const SearchBar = () => {
   const [query, setQuery] = useState("");
+  const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (query.trim()) {
-      redirect(`/movies/search/${encodeURIComponent(query.trim())}`);
-    }
+    router.push(`/movies/search/${query}`);
   };
 
   return (
     <form onSubmit={handleSearch} className="flex items-center">
-      <div className="flex items-center w-full max-w-[150px] space-x-2 rounded-lg border px-3.5 py-1.5 h-10">
-        <Search className="w-5 h-5 -mr-2" />
+      <div className="flex h-10 w-full max-w-[150px] items-center space-x-2 rounded-lg border px-3.5 py-1.5">
+        <Search className="-mr-2 h-5 w-5" />
 
         <Input
           type="text"
-          placeholder="Search"
-          className="w-full border-0 focus-visible:ring-transparent h-8 font-semibold"
+          placeholder="Search..."
+          className="h-8 w-full border-0 text-sm"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>
     </form>
   );
-}
+};
+
+export default SearchBar;

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -6,7 +8,7 @@ interface NavbarLinkProps {
   label: string;
 }
 
-const NavbarLink: React.FC<NavbarLinkProps> = ({ href, label }) => {
+const NavbarLink = ({ href, label }: NavbarLinkProps) => {
   const pathname = usePathname();
   const isActive = pathname === href;
 

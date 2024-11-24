@@ -1,19 +1,14 @@
 import NavbarLarge from "@/components/navbar/navbar-large";
 import NavbarMobile from "@/components/navbar/navbar-mobile";
 
-const Navbar = async () => {
+const Navbar = () => {
   return (
-    <nav className="border-b">
-      {/* visible only on medium and larger screens */}
-      <div className="hidden md:flex">
+    <header className="sticky top-0 z-50 border-b bg-background/100">
+      <div className="container mx-auto flex h-16 items-center justify-between p-4 md:p-6">
         <NavbarLarge />
-      </div>
-
-      {/* visible only on small screens */}
-      <div className="flex md:hidden">
         <NavbarMobile />
       </div>
-    </nav>
+    </header>
   );
 };
 

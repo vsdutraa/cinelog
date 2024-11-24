@@ -1,16 +1,13 @@
-"use client";
-import React from "react";
-
-import { User } from "@/models/types/types";
-import { useSession } from "next-auth/react";
+import { User } from "@/types/db";
 import UserHeader from "@/components/user/profile/user-header";
+import { getServerSession } from "@/lib/auth/get-server-session";
 
 interface ProfileProps {
   user: User;
 }
 
-const Profile: React.FC<ProfileProps> = ({ user }) => {
-  const { data: session } = useSession();
+const Profile = async ({ user }: ProfileProps) => {
+  const session = await getServerSession();
   const isOwner = session?.user.id === user.id;
 
   return (

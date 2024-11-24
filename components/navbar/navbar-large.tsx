@@ -1,15 +1,12 @@
-"use client";
-import Link from "next/link";
-
 import Logo from "@/components/navbar/logo";
-import { ThemeSwitcher } from "@/components/theme/theme-switcher";
+import { ThemeSwitcher } from "@/components/navbar/theme-switcher";
 import SearchBar from "@/components/navbar/search-bar";
 import UserActions from "@/components/user/user-actions";
 import NavbarLinks from "@/components/navbar/navbar-links";
 
 const NavbarLarge = () => {
   return (
-    <nav className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+    <div className="hidden w-full items-center justify-between md:flex">
       {/* left side */}
       <div className="flex items-center space-x-6">
         <Logo />
@@ -23,7 +20,7 @@ const NavbarLarge = () => {
         <UserActions />
         <ThemeSwitcher />
       </div>
-    </nav>
+    </div>
   );
 };
 

@@ -12,7 +12,7 @@ const MovieCard = ({ id, title, posterPath, className }: MovieCardProps) => {
   return (
     <div
       className={cn(
-        "aspect-[2/3] w-full overflow-hidden rounded-md transition-all",
+        "w-full overflow-hidden rounded-md transition-all",
         className,
       )}
     >
@@ -20,7 +20,7 @@ const MovieCard = ({ id, title, posterPath, className }: MovieCardProps) => {
         <img
           src={`https://image.tmdb.org/t/p/w500${posterPath}`}
           alt={title}
-          className="h-full w-full object-cover"
+          className="h-full w-full transition-transform duration-500 hover:scale-105"
           draggable="false"
         />
       </Link>
@@ -28,12 +28,4 @@ const MovieCard = ({ id, title, posterPath, className }: MovieCardProps) => {
   );
 };
 
-import { Skeleton } from "@/components/ui/skeleton";
-
-const MovieCardSkeleton = () => {
-  return (
-    <Skeleton className="aspect-[2/3] h-[2/3] w-full overflow-hidden rounded-md transition-all" />
-  );
-};
-
-export { MovieCard, MovieCardSkeleton };
+export default MovieCard;
