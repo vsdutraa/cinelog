@@ -1,19 +1,15 @@
-import { Movie } from "@/types/db";
+import { Movie } from "@/types";
 import { searchMovies } from "@/lib/api/tmdb";
-import { filterDirector } from "@/lib/api/tmdb-utils";
 
+import SectionHeader from "@/components/section-header";
 import MovieSearchItem from "@/components/movies/search/movie-search-item";
-import { Separator } from "@/components/ui/separator";
-import { delay } from "@/lib/delay";
 
 const SearchResultsPage = async ({
   params,
 }: {
   params: Promise<{ query: string }>;
 }) => {
-  // await delay(2000);
-
-  const query = (await params).query;
+  const { query } = await params;
   const decodedQuery = decodeURIComponent(query);
   const movies = await searchMovies(query, {
     credits: true,
@@ -21,11 +17,13 @@ const SearchResultsPage = async ({
   });
 
   if (movies.length < 1) {
-    return <p>Not found.</p>;
+    return <p>No movies found for "{decodedQuery}"</p>;
   }
 
   return (
     <div className="space-y-6">
+      <SectionHeader title={`Search results for "${decodedQuery}"`} />
+
       {movies.map((movie: Movie) => {
         const {
           id,
@@ -33,11 +31,9 @@ const SearchResultsPage = async ({
           poster_path,
           release_date,
           credits,
+          director,
           alternative_titles,
         } = movie;
-        const director = filterDirector(credits);
-        const directorName = director.name;
-        const releaseYear = release_date.slice(0, 4);
 
         return (
           <div key={id}>
@@ -45,8 +41,8 @@ const SearchResultsPage = async ({
               id={id}
               title={title}
               posterPath={poster_path}
-              releaseYear={releaseYear}
-              directorName={directorName}
+              releaseDate={release_date}
+              directorName={director?.name}
               alternativeTitles={alternative_titles}
             />
           </div>

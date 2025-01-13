@@ -9,7 +9,7 @@ const NavbarMobile = () => {
       <Logo />
 
       {/* right side */}
-      <div className="flex space-x-1.5">
+      <div className="flex gap-1.5">
         <SearchBar />
         <NavbarSheet />
         <ThemeSwitcher />

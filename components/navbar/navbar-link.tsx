@@ -16,7 +16,7 @@ const NavbarLink = ({ href, label }: NavbarLinkProps) => {
     <li>
       <Link
         href={href}
-        className={`transition-all ${isActive ? "text-black dark:text-white" : "text-neutral-500"}`}
+        className={`transition-colors ${isActive ? "text-black dark:text-white" : "text-neutral-500"}`}
       >
         {label}
       </Link>

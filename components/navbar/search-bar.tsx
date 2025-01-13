@@ -1,10 +1,10 @@
 "use client";
 
+import { searchRoute } from "@/routes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
-
 import { Search } from "lucide-react";
 
 const SearchBar = () => {
@@ -13,7 +13,7 @@ const SearchBar = () => {
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/movies/search/${query}`);
+    router.push(`${searchRoute}/${query}`);
   };
 
   return (

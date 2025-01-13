@@ -1,89 +1,67 @@
-import { fetchOptions, Movie, Person } from "@/types";
 import {
-  enrichMovies,
-  filterMovies,
-  formatAlternativeTitles,
-  isMovieComplete,
-} from "@/lib/api/tmdb-utils";
+  fetchOptions,
+  Movie,
+  Person,
+  Credits,
+  AlternativeTitles,
+} from "@/types";
+import { filterMovies, enrichMovie } from "@/lib/api/tmdb-utils";
 
 const TMDB_API_URL = "https://api.themoviedb.org/3";
 
-async function tmdbFetch(endpoint: string) {
+async function tmdbFetch<T>(endpoint: string): Promise<T> {
   const res = await fetch(`${TMDB_API_URL}${endpoint}`, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
       "Content-Type": "application/json",
     },
+    // cache for 1 hour
+    next: { revalidate: 3600 },
   });
 
   if (!res.ok) {
     throw new Error(`TMDB API fetch error: ${res.statusText}`);
   }
 
-  const data = await res.json();
-  return data;
+  return res.json();
 }
 
 export const fetchPopularMovies = async (
   page: number = 1,
-  { credits = false, alternativeTitles = false }: fetchOptions = {},
+  options: fetchOptions = {},
 ): Promise<Movie[]> => {
-  const data = await tmdbFetch(`/movie/popular?language=en-US&page=${page}`);
+  const data = await tmdbFetch<{ results: Movie[] }>(
+    `/movie/popular?language=en-US&page=${page}`,
+  );
   const movies = filterMovies(data.results);
-
-  if (credits || alternativeTitles) {
-    return enrichMovies(movies, { credits, alternativeTitles });
-  }
-
-  return movies;
+  return Promise.all(movies.map((movie) => enrichMovie(movie, options)));
 };
 
 export const fetchMovieById = async (
   movieId: string,
-  { credits = false, alternativeTitles = false }: fetchOptions = {},
+  options: fetchOptions = {},
 ): Promise<Movie> => {
-  const [movieData, creditsData, alternativeTitlesData] = await Promise.all([
-    tmdbFetch(`/movie/${movieId}`),
-    credits ? fetchMovieCredits(movieId) : Promise.resolve(null),
-    alternativeTitles
-      ? fetchMovieAlternativeTitles(movieId)
-      : Promise.resolve(null),
-  ]);
-
-  if (!isMovieComplete(movieData)) {
-    throw new Error("Incomplete movie data.");
-  }
-
-  return {
-    ...movieData,
-    ...(credits && { credits: creditsData }),
-    ...(alternativeTitles && { alternative_titles: alternativeTitlesData }),
-  };
+  const movie = await tmdbFetch<Movie>(`/movie/${movieId}?language=en-US`);
+  return enrichMovie(movie, options);
 };
 
 export const searchMovies = async (
   query: string,
-  { credits = false, alternativeTitles = false }: fetchOptions = {},
+  options: fetchOptions = {},
 ): Promise<Movie[]> => {
-  const data = await tmdbFetch(`/search/movie?query=${query}`);
-  const movies = filterMovies(data.results);
-
-  if (credits || alternativeTitles) {
-    return enrichMovies(movies, { credits, alternativeTitles });
-  }
-
-  return movies;
-};
-
-export const fetchMovieCredits = async (movieId: string): Promise<any> => {
-  return await tmdbFetch(`/movie/${movieId}/credits`);
-};
-
-export const fetchMovieAlternativeTitles = async (
-  movieId: string,
-): Promise<string> => {
-  const alternativeTitles = await tmdbFetch(
-    `/movie/${movieId}/alternative_titles`,
+  const data = await tmdbFetch<{ results: Movie[] }>(
+    `/search/movie?query=${encodeURIComponent(query)}&language=en-US`,
   );
-  return formatAlternativeTitles(alternativeTitles);
+  const movies = filterMovies(data.results);
+  return Promise.all(movies.map((movie) => enrichMovie(movie, options)));
 };
+
+export async function fetchMovieCredits(movieId: string): Promise<Credits> {
+  return tmdbFetch<Credits>(`/movie/${movieId}/credits`);
+}
+
+export async function fetchMovieAlternativeTitles(
+  movieId: string,
+): Promise<AlternativeTitles> {
+  return tmdbFetch<AlternativeTitles>(`/movie/${movieId}/alternative_titles`);
+}

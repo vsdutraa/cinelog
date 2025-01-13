@@ -1,25 +1,13 @@
-import { cn } from "@/lib/utils";
-import { Skeleton } from "@/components/ui/skeleton";
-
 interface MovieInfoProps {
   releaseYear: string;
   directorName: string;
-  className?: string;
 }
 
-const MovieInfo = ({
-  releaseYear,
-  directorName,
-  className,
-}: MovieInfoProps) => {
+const MovieInfo = ({ releaseYear, directorName }: MovieInfoProps) => {
   return (
-    <div
-      className={cn(
-        "flex items-center space-x-1.5 text-lg font-light",
-        className,
-      )}
-    >
+    <div className="flex items-center space-x-1.5 text-lg font-light">
       <p>{releaseYear}.</p>
+
       <p>
         <span className="text-muted-foreground">Directed by </span>{" "}
         {directorName}

@@ -1,5 +1,3 @@
-"use client";
-
 import { Movie } from "@/types";
 import {
   Carousel,
@@ -20,7 +18,8 @@ const MovieCarousel = ({ movies }: MovieCarouselProps) => {
       <Carousel
         opts={{
           align: "start",
-          slidesToScroll: window.innerWidth < 768 ? 2 : 5,
+          slidesToScroll: 1,
+          dragFree: true,
         }}
         className="w-full"
       >
@@ -38,15 +37,17 @@ const MovieCarousel = ({ movies }: MovieCarouselProps) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious
-          variant="ghost"
-          className="-left-8 hover:bg-transparent hover:text-muted-foreground"
-        />
+        <div className="hidden md:flex">
+          <CarouselPrevious
+            variant="ghost"
+            className="-left-8 hover:bg-transparent hover:stroke-muted-foreground"
+          />
 
-        <CarouselNext
-          variant="ghost"
-          className="-right-8 hover:bg-transparent hover:text-muted-foreground"
-        />
+          <CarouselNext
+            variant="ghost"
+            className="-right-8 hover:bg-transparent hover:stroke-muted-foreground"
+          />
+        </div>
       </Carousel>
     </div>
   );
