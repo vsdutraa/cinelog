@@ -7,7 +7,6 @@ import {
   SheetHeader,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import UserActions from "@/components/user/user-actions";
 import NavbarLogo from "@/components/navbar/logo";
 import NavbarLinks from "@/components/navbar/navbar-links";
 const NavbarSheet = () => {
@@ -26,7 +25,6 @@ const NavbarSheet = () => {
         </SheetHeader>
         <div className="flex flex-col space-y-4">
           <NavbarLinks />
-          <UserActions />
         </div>
       </SheetContent>
     </Sheet>

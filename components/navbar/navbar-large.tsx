@@ -1,7 +1,6 @@
 import Logo from "@/components/navbar/logo";
 import { ThemeSwitcher } from "@/components/navbar/theme-switcher";
 import SearchBar from "@/components/navbar/search-bar";
-import UserActions from "@/components/user/user-actions";
 import NavbarLinks from "@/components/navbar/navbar-links";
 
 const NavbarLarge = () => {
@@ -17,7 +16,6 @@ const NavbarLarge = () => {
 
       <div className="flex space-x-2">
         <SearchBar />
-        <UserActions />
         <ThemeSwitcher />
       </div>
     </div>

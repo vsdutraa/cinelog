@@ -1,5 +1,3 @@
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-
 interface MoviePosterProps {
   title: string;
   backdropPath: string;
